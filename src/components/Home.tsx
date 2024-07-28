@@ -1,9 +1,9 @@
 import { FC, memo } from "react"
 
-export const Login:FC = memo(() => {
+export const Home:FC = memo(() => {
     return (
         <div>
-            <p>ログインページ</p>
+            <p>Homeページ</p>
         </div>
     )
 })
