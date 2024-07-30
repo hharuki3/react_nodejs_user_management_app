@@ -9,7 +9,6 @@ function App() {
     <ChakraProvider>
       <BrowserRouter>
         <Router />
-        <div>わわわわ</div>
       </BrowserRouter>
     </ChakraProvider>
   );
