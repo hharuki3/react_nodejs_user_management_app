@@ -1,12 +1,13 @@
 import { FC, memo, useState } from "react";
 import { PrimaryButton } from "../atoms/PrimaryButton";
 import { Box, Divider, Flex, Heading, Input, Stack } from "@chakra-ui/react";
+import { useAuth } from "../../hooks/useAuth";
 
 export const LoginCard: FC = memo(() => {
   const [text, setText] = useState("");
-  const onClickLogin = () =>
-    // ここにaxiosを使ったログイン処理を実装
-    alert(`ログインしました：${text}`);
+  const { login, loading } = useAuth();
+  const onClickLogin = () => login(text);
+    // ここにaxiosを使ったログイン処理を実装。axiosの処理はhooksディレクトリに記述する
   const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) =>
     setText(e.target.value);
   return (
@@ -22,7 +23,7 @@ export const LoginCard: FC = memo(() => {
             onChange={onChangeText}
             value={text}
           />
-          <PrimaryButton onClick={onClickLogin}>ログイン</PrimaryButton>
+          <PrimaryButton onClick={onClickLogin} disabled={text === ''} isLoading={loading}>ログイン</PrimaryButton>
         </Stack>
       </Box>
     </Flex>
