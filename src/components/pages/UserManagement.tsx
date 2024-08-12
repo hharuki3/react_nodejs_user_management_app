@@ -9,12 +9,15 @@ import { FC, memo, useEffect } from "react";
 import { UserCard } from "../organisms/UserCard";
 import { UserDetailModal } from "../organisms/UserDetailModal";
 import { useAllUsers } from "../../hooks/useAllUsers";
+import { useSelectedUser } from "../../hooks/useSelectedUser";
 
 export const UserManageMent: FC = memo(() => {
   const { getUser, users, loading } = useAllUsers();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const onClickUser = () => onOpen();
-
+  const { onSelectUser, selectedUser } = useSelectedUser();
+  const onClickUser = (id: number) => {
+    onSelectUser({ id: id, users: users, onOpen: onOpen });
+  };
   useEffect(() => getUser(), []);
   return (
     <>
@@ -27,6 +30,7 @@ export const UserManageMent: FC = memo(() => {
           {users.map((user) => (
             <WrapItem key={user.id} mx="auto">
               <UserCard
+                id={user.id}
                 image="https://picsum.photos/800"
                 username={user.name}
                 nickname={user.username}
@@ -36,7 +40,7 @@ export const UserManageMent: FC = memo(() => {
           ))}
         </Wrap>
       )}
-      <UserDetailModal isOpen={isOpen} onClose={onClose} />
+      <UserDetailModal isOpen={isOpen} onClose={onClose} selectedUser={selectedUser} />
     </>
   );
 });
